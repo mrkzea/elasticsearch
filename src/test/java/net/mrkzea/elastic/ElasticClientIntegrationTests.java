@@ -1,9 +1,8 @@
 package net.mrkzea.elastic;
 
-import org.elasticsearch.action.index.IndexRequestBuilder;
+import junit.framework.Assert;
 import org.elasticsearch.client.Client;
 import org.elasticsearch.test.ElasticsearchIntegrationTest;
-import org.junit.Before;
 import org.junit.Test;
 
 
@@ -14,14 +13,28 @@ import org.junit.Test;
 public class ElasticClientIntegrationTests extends ElasticsearchIntegrationTest {
 
 
-    ElasticClient client;
+    ElasticMap client;
 
 
     @Test
-    public void shouldIndex() {
+    public void testPut() {
         Client testClient = ElasticsearchIntegrationTest.client();
-        client = new ElasticClient(testClient);
-        client.index("test");
+        client = new ElasticMap(testClient);
+        client.put("1", "test");
     }
+
+
+    @Test
+    public void testGet(){
+        Client testClient = ElasticsearchIntegrationTest.client();
+        client = new ElasticMap(testClient);
+        client.put("1", "test");
+        String result = client.get("1");
+        System.out.println(result);
+        Assert.assertEquals("{\"value\":\"test\"}",result);
+
+    }
+
+
 
 }

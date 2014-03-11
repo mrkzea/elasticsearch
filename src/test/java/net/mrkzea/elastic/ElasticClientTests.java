@@ -13,13 +13,13 @@ import org.junit.Test;
 public class ElasticClientTests extends ElasticsearchTestCase {
 
 
-    ElasticClient client;
+    ElasticMap client;
 
 
 
     @Before
     public void setUp(){
-//        client = new ElasticClient();
+//        client = new ElasticMap();
     }
 
     @Test
