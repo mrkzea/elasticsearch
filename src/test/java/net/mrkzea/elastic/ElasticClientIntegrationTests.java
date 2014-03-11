@@ -37,4 +37,32 @@ public class ElasticClientIntegrationTests extends ElasticsearchIntegrationTest 
 
 
 
+
+    @Test
+    public void testDelete(){
+        Client testClient = ElasticsearchIntegrationTest.client();
+        client = new ElasticMap(testClient);
+        client.put("1", "test");
+        String result = client.get("1");
+        Assert.assertEquals("{\"value\":\"test\"}", result);
+        client.delete("1");
+        Assert.assertNull(client.get("1"));
+    }
+
+
+
+    @Test
+    public void testBulk(){
+        Client testClient = ElasticsearchIntegrationTest.client();
+        client = new ElasticMap(testClient);
+        Entry e1 = new Entry("1", "small");
+        Entry e2 = new Entry("2", "big");
+        Entry[] entries = new Entry[]{e1, e2};
+        client.putAll(entries);
+        Assert.assertEquals("{\"value\":\"big\"}", client.get("2"));
+
+    }
+
+
+
 }
