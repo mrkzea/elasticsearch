@@ -16,6 +16,8 @@ public class ElasticClientIntegrationTests extends ElasticsearchIntegrationTest 
     ElasticMap client;
 
 
+
+
     @Test
     public void testPut() {
         Client testClient = ElasticsearchIntegrationTest.client();
@@ -59,10 +61,22 @@ public class ElasticClientIntegrationTests extends ElasticsearchIntegrationTest 
         Entry e2 = new Entry("2", "big");
         Entry[] entries = new Entry[]{e1, e2};
         client.putAll(entries);
-        Assert.assertEquals("{\"value\":\"big\"}", client.get("2"));
-
+        Assert.assertEquals("{\"ID\":\"2\",\"value\":\"big\"}", client.get("2"));
     }
 
 
 
+    @Test
+    public void testSearch() throws  Exception{
+        Client testClient = ElasticsearchIntegrationTest.client();
+        client = new ElasticMap(testClient);
+        Entry e1 = new Entry("1", "small");
+        Entry e2 = new Entry("2", "big");
+        Entry[] entries = new Entry[]{e1, e2};
+        client.putAll(entries);
+
+        String term = "big";
+        String result = client.search(term);
+        Assert.assertEquals("{\"ID\":\"2\",\"value\":\"big\"}", result);
+    }
 }
