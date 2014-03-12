@@ -129,9 +129,11 @@ public class ElasticMap {
 
 
         SearchHits hits = searchResponse.getHits();
-        SearchHit firstHit = hits.getAt(0);
-
-        return firstHit.getSourceAsString();
-
+        if(hits.getHits().length > 0){
+            SearchHit firstHit = hits.getAt(0);
+            return firstHit.getSourceAsString();
+        }else{
+            return "EMPTY";
+        }
     }
 }

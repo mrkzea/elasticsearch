@@ -16,8 +16,6 @@ public class ElasticClientIntegrationTests extends ElasticsearchIntegrationTest 
     ElasticMap client;
 
 
-
-
     @Test
     public void testPut() {
         Client testClient = ElasticsearchIntegrationTest.client();
