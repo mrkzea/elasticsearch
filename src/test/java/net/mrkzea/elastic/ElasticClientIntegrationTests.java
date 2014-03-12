@@ -79,4 +79,19 @@ public class ElasticClientIntegrationTests extends ElasticsearchIntegrationTest 
         String result = client.search(term);
         Assert.assertEquals("{\"ID\":\"2\",\"value\":\"big\"}", result);
     }
+
+
+    @Test
+    public void testSubstringSearch() throws  Exception{
+        Client testClient = ElasticsearchIntegrationTest.client();
+        client = new ElasticMap(testClient);
+        Entry e1 = new Entry("1", "small");
+        Entry e2 = new Entry("2", "http://company.com?id=1022&user=claire");
+        Entry[] entries = new Entry[]{e1, e2};
+        client.putAll(entries);
+
+        String term = "id=1022";
+        String result = client.search(term);
+        Assert.assertEquals("{\"ID\":\"2\",\"value\":\"http://company.com?id=1022&user=claire\"}", result);
+    }
 }
